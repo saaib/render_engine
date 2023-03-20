@@ -1,4 +1,5 @@
 import pluggy
+import re
 
 from render_engine.collection import Collection
 from render_engine.feeds import RSSFeed
@@ -63,5 +64,23 @@ def test_rss_feed_item_url(tmp_path):
         Feed = RSSFeed
 
     collection = TestCollection()
-    print(collection._feed.template)
-    assert "http://localhost:8000//page.html" in collection._feed._render_content(engine=engine)
+    assert "http://localhost:8000/page.html" in collection._feed._render_content(engine=engine)
+
+
+def test_rss_feed_creates_one_per_item(tmp_path):
+    tmp_dir = tmp_path / "content"
+    tmp_dir.mkdir()
+    file = tmp_dir / "#"
+    file.write_text("test")
+
+    class TestCollection(Collection):
+        pages = [Page(content_path=file)]
+        Feed = RSSFeed
+
+    collection = TestCollection()
+    print(collection._feed._render_content(engine=engine))
+    assert len(
+        re.findall(
+            r"http://localhost:8000/page.html",
+            collection._feed._render_content(engine=engine)
+            )) == 4

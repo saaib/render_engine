@@ -19,7 +19,7 @@ def test_site_defaults():
     site = Site()
 
     assert site.site_vars["SITE_TITLE"] == "Untitled Site"
-    assert site.site_vars["SITE_URL"] == "http://localhost:8000/"
+    assert site.site_vars["SITE_URL"] == "http://localhost:8000"
 
 
 def test_site_site_vars_orrider_defaults_via_class():

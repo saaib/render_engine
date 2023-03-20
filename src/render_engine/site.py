@@ -34,7 +34,7 @@ class Site:
 
     site_vars: dict = {
         "SITE_TITLE": "Untitled Site",
-        "SITE_URL": "http://localhost:8000/",
+        "SITE_URL": "http://localhost:8000",
     }
     plugins: list
 
